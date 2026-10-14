@@ -95,7 +95,7 @@ export function App() {
         </main>
 
         {/* Comic Helper Footer */}
-        <footer className="mt-8 pt-4 border-t-2 border-comic-ink/10 dark:border-neutral-800 text-center text-xs font-mono text-comic-inkMuted dark:text-neutral-400">
+        <footer className="mt-8 pt-2 text-center text-xs font-mono text-comic-inkMuted dark:text-neutral-400">
           <p>
             ✦ Drag <span className="font-bold text-comic-ink dark:text-neutral-200">⠿</span> to rearrange • Tap <span className="font-bold text-comic-green dark:text-emerald-400">📅</span> to send to Google Calendar ✦
           </p>

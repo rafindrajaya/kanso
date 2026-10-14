@@ -14,7 +14,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Comic Speech Bubble Tail pointing downward from center */
+/* Dual-Theme Comic Shadows (High contrast in both Light & Dark modes) */
+.comic-shadow {
+  box-shadow: 2px 2px 0px 0px #0F0F0F;
+}
+.dark .comic-shadow {
+  box-shadow: 2px 2px 0px 0px rgba(255, 255, 255, 0.85);
+}
+
+.comic-shadow-sm {
+  box-shadow: 1px 1px 0px 0px #0F0F0F;
+}
+.dark .comic-shadow-sm {
+  box-shadow: 1px 1px 0px 0px rgba(255, 255, 255, 0.85);
+}
+
+.comic-shadow-lg {
+  box-shadow: 3px 3px 0px 0px #0F0F0F;
+}
+.dark .comic-shadow-lg {
+  box-shadow: 3px 3px 0px 0px rgba(255, 255, 255, 0.85);
+}
+
+/* Comic Speech Bubble Tail pointing downward to wizard */
 .comic-bubble-tail-down {
   position: absolute;
   bottom: -8px;
@@ -35,14 +57,14 @@ body {
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 6px solid #FDFCF9;
+  border-top: 6px solid #FFFFFF;
 }
 
 .dark .comic-bubble-tail-down {
-  border-top-color: #EDEDEB;
+  border-top-color: #FFFFFF;
 }
 .dark .comic-bubble-tail-down::after {
-  border-top-color: #171717;
+  border-top-color: #1E1E1E;
 }
 
 /* Hide scrollbar for mobile tabs */

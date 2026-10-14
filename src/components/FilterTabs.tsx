@@ -26,7 +26,7 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
   ];
 
   return (
-    <div className="flex items-center gap-1.5 p-1.5 bg-comic-card dark:bg-comic-cardDark border-2 border-comic-ink dark:border-neutral-200 rounded-2xl shadow-comic overflow-x-auto no-scrollbar">
+    <div className="flex items-center gap-1.5 p-1.5 bg-comic-card dark:bg-comic-cardDark border-2 border-comic-ink dark:border-white rounded-2xl comic-shadow overflow-x-auto no-scrollbar transition-colors">
       {tabs.map(tab => {
         const isActive = currentFilter === tab.key;
         return (
@@ -34,19 +34,19 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
             key={tab.key}
             type="button"
             onClick={() => onFilterChange(tab.key)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border-2 ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black whitespace-nowrap transition-all border-2 ${
               isActive
-                ? 'bg-comic-ink text-white dark:bg-neutral-100 dark:text-comic-ink border-comic-ink dark:border-neutral-200 shadow-comic-sm'
-                : 'border-transparent text-comic-ink dark:text-neutral-300 hover:border-comic-ink/20 dark:hover:border-neutral-700'
+                ? 'bg-comic-ink text-white dark:bg-white dark:text-comic-ink border-comic-ink dark:border-white comic-shadow-sm'
+                : 'border-transparent text-comic-ink dark:text-neutral-200 hover:border-comic-ink/20 dark:hover:border-neutral-500'
             }`}
           >
             <span>{tab.icon}</span>
             <span>{tab.label}</span>
             <span
-              className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full border ${
+              className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded-full border ${
                 isActive
-                  ? 'bg-white text-comic-ink border-comic-ink dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-700'
-                  : 'bg-comic-bg text-comic-ink border-comic-ink/30 dark:bg-neutral-800 dark:text-neutral-300'
+                  ? 'bg-white text-comic-ink border-comic-ink dark:bg-neutral-800 dark:text-white dark:border-neutral-600'
+                  : 'bg-comic-bg text-comic-ink border-comic-ink/30 dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-600'
               }`}
             >
               {tab.count}

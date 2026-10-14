@@ -17,6 +17,7 @@ import {
 import { Task } from '../types/task';
 import { TaskItem } from './TaskItem';
 import { CheckCircle2 } from 'lucide-react';
+import { triggerHaptic } from '../lib/haptics';
 
 interface TaskListProps {
   tasks: Task[];
@@ -47,14 +48,15 @@ export const TaskList: React.FC<TaskListProps> = ({
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
+      triggerHaptic('medium');
       onReorder(String(active.id), String(over.id));
     }
   };
 
   if (tasks.length === 0) {
     return (
-      <div className="text-center py-12 px-4 rounded-2xl border-2 border-dashed border-comic-ink/30 dark:border-neutral-700 bg-comic-card dark:bg-comic-cardDark shadow-comic">
-        <CheckCircle2 size={36} className="mx-auto text-comic-inkMuted dark:text-neutral-500 mb-2" />
+      <div className="text-center py-12 px-4 rounded-2xl border-2 border-dashed border-comic-ink/30 dark:border-neutral-500 bg-comic-card dark:bg-comic-cardDark comic-shadow">
+        <CheckCircle2 size={36} className="mx-auto text-comic-inkMuted dark:text-neutral-400 mb-2" />
         <p className="text-sm font-bold text-comic-ink dark:text-neutral-200">
           No quests active
         </p>

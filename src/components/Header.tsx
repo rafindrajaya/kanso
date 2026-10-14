@@ -27,7 +27,7 @@ export const Header: React.FC<HeaderProps> = ({
       <button
         type="button"
         onClick={onToggleDarkMode}
-        className="w-9 h-9 rounded-xl bg-comic-card dark:bg-comic-cardDark border-2 border-comic-ink dark:border-neutral-200 shadow-comic flex items-center justify-center text-comic-ink dark:text-neutral-100 hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+        className="w-9 h-9 rounded-xl bg-comic-card dark:bg-comic-cardDark border-2 border-comic-ink dark:border-white comic-shadow flex items-center justify-center text-comic-ink dark:text-neutral-100 hover:translate-x-0.5 hover:translate-y-0.5 active:translate-x-1 active:translate-y-1 transition-all"
         aria-label="Toggle theme"
         title="Toggle dark/light mode"
       >
