@@ -18,8 +18,9 @@ A fast, warm-minimalist personal task manager inspired by **Notion** and **Thing
 
 ```text
 personal-task-manager/
+├── .github/workflows/deploy.yml # Automated GitHub Pages PWA deployment
 ├── index.html                   # HTML entry point, PWA meta tags, viewport configuration
-├── vite.config.ts               # Vite build tool configuration
+├── vite.config.ts               # Vite build tool configuration with VitePWA
 ├── tailwind.config.js           # Warm paper Notion color tokens and custom utilities
 ├── tsconfig.json                # TypeScript compiler settings
 ├── package.json                 # Project dependencies & scripts
@@ -29,6 +30,7 @@ personal-task-manager/
     │   └── task.ts              # Core data types (Task, FilterType, NewTaskInput)
     ├── lib/
     │   ├── storage.ts           # Local-first persistence helper (load, save, reorder)
+    │   ├── haptics.ts           # Tactile vibration feedback for iPhone & mobile
     │   ├── dateUtils.ts         # Human-friendly date formatting (Today, Tomorrow, Past Due)
     │   └── googleCalendar.ts    # Google Calendar event URL generator and intent handler
     ├── hooks/

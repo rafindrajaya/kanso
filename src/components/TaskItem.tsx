@@ -5,6 +5,7 @@ import { GripVertical, Check, Trash2, CalendarPlus, Clock } from 'lucide-react';
 import { Task } from '../types/task';
 import { formatFriendlyDate, isPastDue, isToday } from '../lib/dateUtils';
 import { shareTaskToGoogleCalendar } from '../lib/googleCalendar';
+import { triggerHaptic } from '../lib/haptics';
 
 interface TaskItemProps {
   task: Task;
@@ -52,7 +53,10 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) 
       {/* Checkbox */}
       <button
         type="button"
-        onClick={() => onToggle(task.id)}
+        onClick={() => {
+          triggerHaptic(task.completed ? 'light' : 'success');
+          onToggle(task.id);
+        }}
         className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${
           task.completed
             ? 'bg-emerald-500 border-emerald-500 text-white'
