@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, Moon, LayoutGrid } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 
 interface HeaderProps {
   isDarkMode: boolean;
@@ -10,40 +10,28 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   isDarkMode,
   onToggleDarkMode,
-  activeCount,
 }) => {
-  const todayFormatted = new Date().toLocaleDateString(undefined, {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-  });
-
   return (
     <header className="flex items-center justify-between py-3 mb-2">
-      {/* Left Icon Button (IMG_8965 RPG Grid Menu style) */}
-      <div className="w-10 h-10 rounded-2xl bg-comic-card dark:bg-comic-cardDark border-2 border-comic-ink dark:border-neutral-200 shadow-comic flex items-center justify-center text-comic-ink dark:text-neutral-100">
-        <LayoutGrid size={18} strokeWidth={2.5} />
-      </div>
-
-      {/* Center Branding */}
-      <div className="text-center">
-        <h1 className="text-lg md:text-xl font-black tracking-widest uppercase text-comic-ink dark:text-neutral-100">
+      {/* Top Left: KANSO and Japanese Kanji 簡素 */}
+      <div className="flex items-center gap-2">
+        <h1 className="text-xl md:text-2xl font-black tracking-widest uppercase text-comic-ink dark:text-neutral-100">
           KANSO
         </h1>
-        <p className="text-[11px] font-mono text-comic-inkMuted dark:text-neutral-400">
-          {todayFormatted} • {activeCount} quests
-        </p>
+        <span className="text-sm md:text-base font-bold text-comic-green dark:text-emerald-400 tracking-wider">
+          簡素
+        </span>
       </div>
 
-      {/* Right Theme Toggle (IMG_8965 Action Button style) */}
+      {/* Top Right: Theme Toggle */}
       <button
         type="button"
         onClick={onToggleDarkMode}
-        className="w-10 h-10 rounded-2xl bg-comic-card dark:bg-comic-cardDark border-2 border-comic-ink dark:border-neutral-200 shadow-comic flex items-center justify-center text-comic-ink dark:text-neutral-100 hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+        className="w-9 h-9 rounded-xl bg-comic-card dark:bg-comic-cardDark border-2 border-comic-ink dark:border-neutral-200 shadow-comic flex items-center justify-center text-comic-ink dark:text-neutral-100 hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
         aria-label="Toggle theme"
         title="Toggle dark/light mode"
       >
-        {isDarkMode ? <Sun size={18} strokeWidth={2.5} /> : <Moon size={18} strokeWidth={2.5} />}
+        {isDarkMode ? <Sun size={17} strokeWidth={2.5} /> : <Moon size={17} strokeWidth={2.5} />}
       </button>
     </header>
   );

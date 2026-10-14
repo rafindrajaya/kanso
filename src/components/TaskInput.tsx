@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Calendar, Clock, Sparkles } from 'lucide-react';
+import { Plus, Calendar, Clock } from 'lucide-react';
 import { NewTaskInput } from '../types/task';
 import { getTodayString, getTomorrowString } from '../lib/dateUtils';
 
@@ -50,11 +50,9 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
         <button
           type="submit"
           disabled={!title.trim()}
-          className="px-3.5 py-1.5 bg-comic-ink text-white dark:bg-neutral-100 dark:text-comic-ink rounded-full text-xs font-black tracking-wide border-2 border-comic-ink dark:border-neutral-200 flex items-center gap-1 shadow-comic-sm hover:translate-x-0.5 hover:translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+          className="px-4 py-1.5 bg-comic-ink text-white dark:bg-neutral-100 dark:text-comic-ink rounded-full text-xs font-black tracking-wide border-2 border-comic-ink dark:border-neutral-200 shadow-comic-sm hover:translate-x-0.5 hover:translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
         >
-          <Sparkles size={11} className="text-amber-400 dark:text-amber-600" />
-          <span>ADD</span>
-          <Sparkles size={11} className="text-amber-400 dark:text-amber-600" />
+          + Add
         </button>
       </div>
 

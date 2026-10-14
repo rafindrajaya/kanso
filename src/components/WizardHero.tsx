@@ -1,5 +1,4 @@
 import React from 'react';
-import { Sparkles } from 'lucide-react';
 
 interface WizardHeroProps {
   completedToday: number;
@@ -18,39 +17,34 @@ export const WizardHero: React.FC<WizardHeroProps> = ({
   const targetExp = 300;
 
   // Percentage for today's daily focus progress bar
-  const progressPercent = totalToday > 0 ? Math.min(100, Math.round((completedToday / totalToday) * 100)) : (completedTotal > 0 ? 100 : 0);
+  const progressPercent = totalToday > 0 
+    ? Math.min(100, Math.round((completedToday / totalToday) * 100)) 
+    : (completedTotal > 0 ? 100 : 0);
 
   return (
-    <div className="bg-comic-card dark:bg-comic-cardDark rounded-2xl border-2 border-comic-ink dark:border-neutral-200 shadow-comic p-4 text-comic-ink dark:text-neutral-100 transition-all">
-      {/* Character + Speech Bubble Header */}
-      <div className="flex items-end gap-3.5 mb-3">
-        {/* Frog Wizard Avatar */}
-        <div className="relative w-20 h-20 shrink-0 rounded-xl overflow-hidden border-2 border-comic-ink dark:border-neutral-200 bg-comic-bg">
-          <img
-            src="/wizard.jpg"
-            alt="Frog Wizard"
-            className="w-full h-full object-cover"
-          />
-        </div>
+    <div className="bg-comic-card dark:bg-comic-cardDark rounded-2xl border-2 border-comic-ink dark:border-neutral-200 shadow-comic p-4 text-comic-ink dark:text-neutral-100 flex flex-col items-center">
+      {/* Small Speech Bubble on Top pointing directly down to character */}
+      <div className="relative mb-2.5 px-3 py-1 bg-white dark:bg-neutral-900 border-2 border-comic-ink dark:border-neutral-200 rounded-full shadow-comic-sm">
+        <span className="text-xs font-bold tracking-tight text-comic-green dark:text-emerald-400 whitespace-nowrap">
+          &ldquo;A wizard is never late&rdquo;
+        </span>
+        <div className="comic-bubble-tail-down" />
+      </div>
 
-        {/* Comic Speech Bubble */}
-        <div className="relative flex-1 bg-white dark:bg-neutral-900 border-2 border-comic-ink dark:border-neutral-200 rounded-xl px-3.5 py-2 shadow-comic-sm">
-          <div className="flex items-center gap-1.5 text-xs md:text-sm font-bold tracking-tight text-comic-green dark:text-emerald-400">
-            <Sparkles size={14} className="shrink-0 animate-pulse text-amber-500" />
-            <span>&ldquo;A wizard is never late&rdquo;</span>
-          </div>
-          <p className="text-[11px] text-comic-inkMuted dark:text-neutral-400 mt-0.5">
-            Nor is he early, he arrives precisely when he means to.
-          </p>
-          <div className="comic-bubble-tail" />
-        </div>
+      {/* Centered Frog Wizard Character with Transparent Background */}
+      <div className="w-24 h-24 my-1 flex items-center justify-center">
+        <img
+          src="/wizard.png"
+          alt="Frog Wizard"
+          className="w-full h-full object-contain filter drop-shadow-sm"
+        />
       </div>
 
       {/* Level Title & Subtext (Paladin Reference Style) */}
-      <div className="flex items-baseline justify-between mb-1.5">
-        <h2 className="text-base md:text-lg font-black tracking-tight flex items-center gap-1.5">
+      <div className="w-full flex items-baseline justify-between mt-2 mb-1.5 px-0.5">
+        <h2 className="text-base font-black tracking-tight flex items-center gap-1.5">
           <span>Frog Wizard</span>
-          <span className="text-xs font-mono font-semibold px-1.5 py-0.5 bg-comic-greenLight dark:bg-emerald-950/60 text-comic-green dark:text-emerald-300 rounded border border-comic-green/30">
+          <span className="text-[11px] font-mono font-bold px-1.5 py-0.2 bg-comic-greenLight dark:bg-emerald-950/60 text-comic-green dark:text-emerald-300 rounded border border-comic-green/30">
             lv. {level}
           </span>
         </h2>
@@ -59,8 +53,8 @@ export const WizardHero: React.FC<WizardHeroProps> = ({
         </span>
       </div>
 
-      {/* Comic Progress Bar (IMG_8965 Paladin Style) */}
-      <div className="relative w-full h-4 bg-comic-bg dark:bg-neutral-800 rounded-full border-2 border-comic-ink dark:border-neutral-200 overflow-hidden p-0.5">
+      {/* Comic Progress Bar */}
+      <div className="w-full h-4 bg-comic-bg dark:bg-neutral-800 rounded-full border-2 border-comic-ink dark:border-neutral-200 overflow-hidden p-0.5">
         <div
           className="h-full bg-comic-ink dark:bg-neutral-200 rounded-full transition-all duration-500 ease-out"
           style={{ width: `${progressPercent}%` }}
@@ -68,7 +62,7 @@ export const WizardHero: React.FC<WizardHeroProps> = ({
       </div>
 
       {/* EXP Ticks */}
-      <div className="flex justify-between items-center text-[10px] font-mono text-comic-inkMuted dark:text-neutral-400 mt-1">
+      <div className="w-full flex justify-between items-center text-[10px] font-mono text-comic-inkMuted dark:text-neutral-400 mt-1 px-0.5">
         <span>{currentExp} exp</span>
         <span>{targetExp} exp</span>
       </div>
