@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
         <div>
           <h1 className="text-lg md:text-xl font-bold tracking-tight text-ink-primary dark:text-ink-darkPrimary">
-            Personal Tasks
+            Kanso
           </h1>
           <p className="text-xs text-neutral-500 dark:text-neutral-400">
             {todayFormatted} • {activeCount} remaining

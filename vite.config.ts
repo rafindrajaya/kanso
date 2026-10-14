@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Personal Task Manager',
-        short_name: 'Tasks',
+        name: 'Kanso - Personal Task Manager',
+        short_name: 'Kanso',
         description: 'Clean offline task manager for iPhone and browser',
         theme_color: '#FBFBFA',
         background_color: '#FBFBFA',
