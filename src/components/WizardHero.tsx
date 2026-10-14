@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { playLevelUpSound } from '../lib/audio';
+import wizardImg from '../assets/wizard.png';
 
 interface WizardHeroProps {
   completedToday: number;
@@ -43,7 +44,7 @@ export const WizardHero: React.FC<WizardHeroProps> = ({
       {/* Centered Frog Wizard Character (Standing freely without background box) */}
       <div className="w-28 h-28 my-1 flex items-center justify-center">
         <img
-          src="/wizard.png"
+          src={wizardImg}
           alt="Frog Wizard"
           className="w-full h-full object-contain filter drop-shadow-sm dark:brightness-175 dark:contrast-125 transition-all"
         />
