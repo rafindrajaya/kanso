@@ -33,8 +33,8 @@ export const WizardHero: React.FC<WizardHeroProps> = ({
   return (
     <section className="flex flex-col items-center pt-2 pb-1 text-comic-ink dark:text-neutral-100 transition-colors">
       {/* Small Speech Bubble: Centered on top without quotation marks */}
-      <div className="relative mb-3 px-3.5 py-1 bg-white dark:bg-[#1E1E1E] border-2 border-comic-ink dark:border-white rounded-full comic-shadow-sm">
-        <span className="text-xs font-bold tracking-tight text-comic-green dark:text-emerald-400 whitespace-nowrap">
+      <div className="relative mb-3 px-3.5 py-1 bg-white dark:bg-[#1A1A1A] border-2 border-comic-ink dark:border-white rounded-full comic-shadow-sm">
+        <span className="text-xs font-black tracking-wide text-comic-ink dark:text-white whitespace-nowrap">
           A wizard is never late
         </span>
         <div className="comic-bubble-tail-down" />

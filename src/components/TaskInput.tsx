@@ -27,6 +27,8 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
     setIsExpanded(false);
   };
 
+  const isEnabled = title.trim().length > 0;
+
   return (
     <form onSubmit={handleSubmit} className="bg-comic-card dark:bg-comic-cardDark rounded-2xl border-2 border-comic-ink dark:border-white p-3.5 comic-shadow transition-colors">
       <div className="flex items-center gap-2.5">
@@ -45,13 +47,18 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
           value={title}
           onChange={e => setTitle(e.target.value)}
           placeholder="New quest or task... (Press Enter)"
-          className="flex-1 bg-transparent text-sm md:text-base font-semibold outline-none text-comic-ink dark:text-white placeholder:text-comic-inkMuted/60 dark:placeholder:text-neutral-500"
+          className="flex-1 bg-transparent text-sm md:text-base font-semibold outline-none text-comic-ink dark:text-white placeholder:text-comic-inkMuted/70 dark:placeholder:text-neutral-400"
         />
 
+        {/* Add Button: High-contrast state in both Light and Dark modes */}
         <button
           type="submit"
-          disabled={!title.trim()}
-          className="px-4 py-1.5 bg-comic-ink text-white dark:bg-white dark:text-comic-ink rounded-full text-xs font-black tracking-wide border-2 border-comic-ink dark:border-white comic-shadow-sm hover:translate-x-0.5 hover:translate-y-0.5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          disabled={!isEnabled}
+          className={`px-4 py-1.5 rounded-full text-xs font-black tracking-wide border-2 transition-all ${
+            isEnabled
+              ? 'bg-comic-ink text-white border-comic-ink dark:bg-white dark:text-comic-ink dark:border-white comic-shadow-sm hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
+              : 'bg-white text-comic-ink border-comic-ink dark:bg-[#1E1E1E] dark:text-white dark:border-white opacity-85 cursor-not-allowed'
+          }`}
         >
           + Add
         </button>
@@ -62,10 +69,10 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
           <button
             type="button"
             onClick={() => setDueDate(getTodayString())}
-            className={`px-2.5 py-1 rounded-lg border-2 transition-all ${
+            className={`px-2.5 py-1 rounded-lg border-2 font-bold transition-all ${
               dueDate === getTodayString()
                 ? 'bg-comic-green text-white border-comic-green dark:border-emerald-400 dark:bg-emerald-600 comic-shadow-sm'
-                : 'border-comic-ink dark:border-neutral-400 text-comic-ink dark:text-neutral-200 bg-comic-bg dark:bg-neutral-800'
+                : 'border-comic-ink dark:border-neutral-400 text-comic-ink dark:text-neutral-100 bg-comic-bg dark:bg-neutral-800'
             }`}
           >
             Today
@@ -74,16 +81,16 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
           <button
             type="button"
             onClick={() => setDueDate(getTomorrowString())}
-            className={`px-2.5 py-1 rounded-lg border-2 transition-all ${
+            className={`px-2.5 py-1 rounded-lg border-2 font-bold transition-all ${
               dueDate === getTomorrowString()
                 ? 'bg-comic-green text-white border-comic-green dark:border-emerald-400 dark:bg-emerald-600 comic-shadow-sm'
-                : 'border-comic-ink dark:border-neutral-400 text-comic-ink dark:text-neutral-200 bg-comic-bg dark:bg-neutral-800'
+                : 'border-comic-ink dark:border-neutral-400 text-comic-ink dark:text-neutral-100 bg-comic-bg dark:bg-neutral-800'
             }`}
           >
             Tomorrow
           </button>
 
-          <label className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border-2 border-comic-ink dark:border-neutral-400 text-comic-ink dark:text-neutral-200 bg-comic-bg dark:bg-neutral-800 cursor-pointer">
+          <label className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border-2 border-comic-ink dark:border-neutral-400 text-comic-ink dark:text-neutral-100 bg-comic-bg dark:bg-neutral-800 cursor-pointer font-bold">
             <Calendar size={13} />
             <input
               type="date"
@@ -93,7 +100,7 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
             />
           </label>
 
-          <label className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border-2 border-comic-ink dark:border-neutral-400 text-comic-ink dark:text-neutral-200 bg-comic-bg dark:bg-neutral-800 cursor-pointer">
+          <label className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border-2 border-comic-ink dark:border-neutral-400 text-comic-ink dark:text-neutral-100 bg-comic-bg dark:bg-neutral-800 cursor-pointer font-bold">
             <Clock size={13} />
             <input
               type="time"

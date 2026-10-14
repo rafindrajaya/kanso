@@ -64,7 +64,7 @@ body {
   border-top-color: #FFFFFF;
 }
 .dark .comic-bubble-tail-down::after {
-  border-top-color: #1E1E1E;
+  border-top-color: #1A1A1A;
 }
 
 /* Hide scrollbar for mobile tabs */
