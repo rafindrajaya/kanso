@@ -9,7 +9,9 @@ import { getTodayString, isToday } from './lib/dateUtils';
 
 export function App() {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const saved = localStorage.getItem('kanso-theme');
+    if (saved) return saved === 'dark';
+    return false;
   });
 
   const {
@@ -24,6 +26,7 @@ export function App() {
   } = useTasks();
 
   useEffect(() => {
+    localStorage.setItem('kanso-theme', isDarkMode ? 'dark' : 'light');
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -97,7 +100,7 @@ export function App() {
         {/* Comic Helper Footer */}
         <footer className="mt-8 pt-2 text-center text-xs font-mono text-comic-inkMuted dark:text-neutral-400">
           <p>
-            ✦ Drag <span className="font-bold text-comic-ink dark:text-neutral-200">⠿</span> to rearrange • Tap <span className="font-bold text-comic-green dark:text-emerald-400">📅</span> to send to Google Calendar ✦
+            ✦ Drag <span className="font-bold text-[#0F0F0F] dark:text-neutral-200">⠿</span> to rearrange • Tap <span className="font-bold text-comic-green dark:text-emerald-400">📅</span> to send to Google Calendar ✦
           </p>
         </footer>
       </div>

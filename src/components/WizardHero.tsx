@@ -33,8 +33,8 @@ export const WizardHero: React.FC<WizardHeroProps> = ({
   return (
     <section className="flex flex-col items-center pt-2 pb-1 text-comic-ink dark:text-neutral-100 transition-colors">
       {/* Small Speech Bubble: Centered on top without quotation marks */}
-      <div className="relative mb-3 px-3.5 py-1 bg-white dark:bg-[#1A1A1A] border-2 border-comic-ink dark:border-white rounded-full comic-shadow-sm">
-        <span className="text-xs font-black tracking-wide text-comic-ink dark:text-white whitespace-nowrap">
+      <div className="relative mb-3 px-3.5 py-1 bg-white dark:bg-[#1A1A1A] border-2 border-[#0F0F0F] dark:border-white rounded-full comic-shadow-sm">
+        <span className="text-xs font-black tracking-wide text-[#0F0F0F] dark:text-white whitespace-nowrap">
           A wizard is never late
         </span>
         <div className="comic-bubble-tail-down" />
@@ -45,7 +45,7 @@ export const WizardHero: React.FC<WizardHeroProps> = ({
         <img
           src="/wizard.png"
           alt="Frog Wizard"
-          className="w-full h-full object-contain filter drop-shadow-sm mix-blend-multiply dark:mix-blend-normal dark:invert dark:brightness-150 transition-all"
+          className="w-full h-full object-contain filter drop-shadow-sm dark:brightness-175 dark:contrast-125 transition-all"
         />
       </div>
 

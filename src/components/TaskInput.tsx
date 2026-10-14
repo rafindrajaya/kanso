@@ -47,7 +47,7 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
           value={title}
           onChange={e => setTitle(e.target.value)}
           placeholder="New quest or task... (Press Enter)"
-          className="flex-1 bg-transparent text-sm md:text-base font-semibold outline-none text-comic-ink dark:text-white placeholder:text-comic-inkMuted/70 dark:placeholder:text-neutral-400"
+          className="flex-1 min-w-0 bg-transparent text-sm md:text-base font-semibold outline-none text-[#0F0F0F] dark:text-white placeholder:text-comic-inkMuted/70 dark:placeholder:text-neutral-400"
         />
 
         {/* Add Button: High-contrast state in both Light and Dark modes */}
@@ -56,8 +56,8 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
           disabled={!isEnabled}
           className={`px-4 py-1.5 rounded-full text-xs font-black tracking-wide border-2 transition-all ${
             isEnabled
-              ? 'bg-comic-ink text-white border-comic-ink dark:bg-white dark:text-comic-ink dark:border-white comic-shadow-sm hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
-              : 'bg-white text-comic-ink border-comic-ink dark:bg-[#1E1E1E] dark:text-white dark:border-white opacity-85 cursor-not-allowed'
+              ? 'bg-[#0F0F0F] text-white border-[#0F0F0F] dark:bg-white dark:text-[#0F0F0F] dark:border-white comic-shadow-sm hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
+              : 'bg-white text-[#0F0F0F] border-[#0F0F0F] dark:bg-[#1E1E1E] dark:text-white dark:border-white opacity-85 cursor-not-allowed'
           }`}
         >
           + Add

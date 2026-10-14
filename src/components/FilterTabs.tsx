@@ -36,8 +36,8 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
             onClick={() => onFilterChange(tab.key)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black whitespace-nowrap transition-all border-2 ${
               isActive
-                ? 'bg-comic-ink text-white dark:bg-white dark:text-comic-ink border-comic-ink dark:border-white comic-shadow-sm'
-                : 'bg-comic-bg text-comic-ink border-comic-ink/30 dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600 hover:border-comic-ink'
+                ? 'bg-[#0F0F0F] text-white border-[#0F0F0F] dark:bg-white dark:text-[#0F0F0F] dark:border-white comic-shadow-sm'
+                : 'bg-comic-bg text-[#0F0F0F] border-[#0F0F0F]/30 dark:bg-neutral-800 dark:text-white dark:border-neutral-600 hover:border-[#0F0F0F]'
             }`}
           >
             <span>{tab.icon}</span>
@@ -45,8 +45,8 @@ export const FilterTabs: React.FC<FilterTabsProps> = ({
             <span
               className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-full border ${
                 isActive
-                  ? 'bg-white text-comic-ink border-comic-ink dark:bg-neutral-900 dark:text-white dark:border-neutral-600'
-                  : 'bg-white text-comic-ink border-comic-ink/40 dark:bg-neutral-900 dark:text-neutral-200 dark:border-neutral-500'
+                  ? 'bg-white text-[#0F0F0F] border-[#0F0F0F] dark:bg-neutral-900 dark:text-white dark:border-neutral-600'
+                  : 'bg-white text-[#0F0F0F] border-[#0F0F0F]/40 dark:bg-neutral-900 dark:text-neutral-200 dark:border-neutral-500'
               }`}
             >
               {tab.count}

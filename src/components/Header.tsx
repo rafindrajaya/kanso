@@ -15,7 +15,7 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="flex items-center justify-between py-3 mb-2">
       {/* Top Left: KANSO and Japanese Kanji 簡素 */}
       <div className="flex items-center gap-2">
-        <h1 className="text-xl md:text-2xl font-black tracking-widest uppercase text-comic-ink dark:text-neutral-100">
+        <h1 className="text-xl md:text-2xl font-black tracking-widest uppercase text-[#0F0F0F] dark:text-white">
           KANSO
         </h1>
         <span className="text-sm md:text-base font-bold text-comic-green dark:text-emerald-400 tracking-wider">

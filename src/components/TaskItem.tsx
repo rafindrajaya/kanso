@@ -77,7 +77,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) 
 
       {/* Task Content */}
       <div className="flex-1 min-w-0 pr-1">
-        <p className={`text-sm font-bold truncate ${task.completed ? 'text-comic-inkMuted dark:text-neutral-500' : 'text-comic-ink dark:text-neutral-100'}`}>
+        <p className={`text-sm font-bold truncate ${task.completed ? 'text-comic-inkMuted dark:text-neutral-400' : 'text-[#0F0F0F] dark:text-white'}`}>
           {task.title}
         </p>
 
