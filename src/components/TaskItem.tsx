@@ -20,7 +20,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) 
   const style: React.CSSProperties = {
     transform: CSS.Translate.toString(transform),
     transition,
-    opacity: isDragging ? 0.4 : 1,
+    opacity: isDragging ? 0.35 : 1,
     zIndex: isDragging ? 50 : 'auto',
   };
 
@@ -32,10 +32,10 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) 
     <div
       ref={setNodeRef}
       style={style}
-      className={`group flex items-center gap-2 p-3 bg-white dark:bg-paper-darkCard rounded-xl border transition-all ${
+      className={`group flex items-center gap-2.5 p-3.5 bg-comic-card dark:bg-comic-cardDark rounded-2xl border-2 border-comic-ink dark:border-neutral-200 transition-all ${
         task.completed
-          ? 'border-neutral-200/60 dark:border-neutral-800/60 opacity-60'
-          : 'border-neutral-200 dark:border-neutral-800 shadow-sm hover:border-neutral-300 dark:hover:border-neutral-700'
+          ? 'opacity-50 line-through shadow-none'
+          : 'shadow-comic hover:shadow-comic-lg hover:-translate-y-0.5'
       }`}
     >
       {/* Touch-Friendly Drag Handle */}
@@ -43,54 +43,54 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) 
         {...attributes}
         {...listeners}
         style={{ touchAction: 'none' }}
-        className="p-1 text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 cursor-grab active:cursor-grabbing focus:outline-none"
+        className="p-1 text-comic-ink dark:text-neutral-300 hover:text-comic-green cursor-grab active:cursor-grabbing focus:outline-none"
         title="Drag to rearrange"
         aria-label="Drag to rearrange"
       >
         <GripVertical size={16} />
       </button>
 
-      {/* Checkbox */}
+      {/* Checkbox with Solid Ink Border */}
       <button
         type="button"
         onClick={() => {
           triggerHaptic(task.completed ? 'light' : 'success');
           onToggle(task.id);
         }}
-        className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${
+        className={`w-5 h-5 rounded-md flex items-center justify-center border-2 border-comic-ink dark:border-neutral-200 transition-all ${
           task.completed
-            ? 'bg-emerald-500 border-emerald-500 text-white'
-            : 'border-neutral-300 dark:border-neutral-600 hover:border-notion-blue'
+            ? 'bg-comic-green text-white'
+            : 'hover:bg-comic-greenLight dark:hover:bg-neutral-800'
         }`}
         aria-label={task.completed ? 'Mark incomplete' : 'Mark complete'}
       >
-        {task.completed && <Check size={14} strokeWidth={3} />}
+        {task.completed && <Check size={14} strokeWidth={3.5} />}
       </button>
 
       {/* Task Content */}
-      <div className="flex-1 min-w-0 pr-2">
-        <p className={`text-sm truncate ${task.completed ? 'line-through text-neutral-400 dark:text-neutral-500' : 'text-ink-primary dark:text-ink-darkPrimary'}`}>
+      <div className="flex-1 min-w-0 pr-1">
+        <p className={`text-sm font-semibold truncate ${task.completed ? 'text-comic-inkMuted dark:text-neutral-500' : 'text-comic-ink dark:text-neutral-100'}`}>
           {task.title}
         </p>
 
         {/* Date and Time Badges */}
         {(friendlyDate || task.dueTime) && (
-          <div className="flex items-center gap-1.5 mt-0.5 text-xs">
+          <div className="flex items-center gap-1.5 mt-0.5 text-xs font-mono">
             {friendlyDate && (
               <span
-                className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium ${
+                className={`inline-flex items-center gap-1 px-1.5 py-0.2 rounded border text-[10px] font-bold ${
                   overdue
-                    ? 'bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400'
+                    ? 'bg-red-100 text-red-800 border-red-800 dark:bg-red-950 dark:text-red-200'
                     : today
-                    ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300'
-                    : 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300'
+                    ? 'bg-amber-100 text-amber-900 border-amber-900 dark:bg-amber-950 dark:text-amber-200'
+                    : 'bg-comic-bg text-comic-ink border-comic-ink dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-700'
                 }`}
               >
                 {friendlyDate}
               </span>
             )}
             {task.dueTime && (
-              <span className="inline-flex items-center gap-0.5 text-neutral-500 text-[11px]">
+              <span className="inline-flex items-center gap-0.5 text-comic-inkMuted text-[10px]">
                 <Clock size={10} />
                 {task.dueTime}
               </span>
@@ -105,7 +105,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) 
         <button
           type="button"
           onClick={() => shareTaskToGoogleCalendar(task)}
-          className="p-1.5 text-neutral-400 hover:text-notion-blue hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded-lg transition-colors"
+          className="p-1.5 text-comic-ink dark:text-neutral-300 hover:text-comic-green hover:bg-comic-greenLight dark:hover:bg-neutral-800 rounded-lg border border-transparent hover:border-comic-ink transition-colors"
           title="Add to Google Calendar"
           aria-label="Add to Google Calendar"
         >
@@ -116,7 +116,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) 
         <button
           type="button"
           onClick={() => onDelete(task.id)}
-          className="p-1.5 text-neutral-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors"
+          className="p-1.5 text-comic-inkMuted hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg border border-transparent hover:border-red-600 transition-colors"
           title="Delete task"
           aria-label="Delete task"
         >

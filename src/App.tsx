@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTasks } from './hooks/useTasks';
 import { Header } from './components/Header';
+import { WizardHero } from './components/WizardHero';
 import { TaskInput } from './components/TaskInput';
 import { FilterTabs } from './components/FilterTabs';
 import { TaskList } from './components/TaskList';
@@ -40,9 +41,19 @@ export function App() {
     };
   }, [tasks]);
 
+  const wizardStats = useMemo(() => {
+    const todayTasks = tasks.filter(t => t.dueDate && isToday(t.dueDate));
+    const completedToday = todayTasks.filter(t => t.completed).length;
+    return {
+      completedToday,
+      totalToday: todayTasks.length,
+      completedTotal: tasks.filter(t => t.completed).length,
+    };
+  }, [tasks]);
+
   return (
-    <div className="min-h-screen bg-paper-light dark:bg-paper-dark transition-colors pt-safe pb-safe px-4 md:px-0">
-      <div className="max-w-xl mx-auto flex flex-col min-h-screen pb-10">
+    <div className="min-h-screen bg-comic-bg dark:bg-[#121212] transition-colors pt-safe pb-safe px-4 md:px-0">
+      <div className="max-w-xl mx-auto flex flex-col min-h-screen pb-12">
         {/* Header */}
         <Header
           isDarkMode={isDarkMode}
@@ -50,8 +61,17 @@ export function App() {
           activeCount={counts.active}
         />
 
-        {/* Task Creation Bar */}
-        <div className="my-4">
+        {/* Wizard Character Hero with Speech Bubble & EXP Progress Bar */}
+        <div className="my-3">
+          <WizardHero
+            completedToday={wizardStats.completedToday}
+            totalToday={wizardStats.totalToday}
+            completedTotal={wizardStats.completedTotal}
+          />
+        </div>
+
+        {/* Adding New Task Section */}
+        <div className="mb-4">
           <TaskInput onAdd={addTask} />
         </div>
 
@@ -74,10 +94,10 @@ export function App() {
           />
         </main>
 
-        {/* Mobile & Desktop Helper Footer */}
-        <footer className="mt-8 pt-4 border-t border-neutral-200/60 dark:border-neutral-800 text-center text-xs text-neutral-400 dark:text-neutral-500">
+        {/* Comic Helper Footer */}
+        <footer className="mt-8 pt-4 border-t-2 border-comic-ink/10 dark:border-neutral-800 text-center text-xs font-mono text-comic-inkMuted dark:text-neutral-400">
           <p>
-            Drag <span className="font-mono text-neutral-600 dark:text-neutral-400">⠿</span> to rearrange • Tap <span className="font-semibold text-notion-blue">📅</span> to send to Google Calendar
+            ✦ Drag <span className="font-bold text-comic-ink dark:text-neutral-200">⠿</span> to rearrange • Tap <span className="font-bold text-comic-green dark:text-emerald-400">📅</span> to send to Google Calendar ✦
           </p>
         </footer>
       </div>

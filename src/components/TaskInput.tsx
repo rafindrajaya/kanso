@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Calendar, Clock } from 'lucide-react';
+import { Plus, Calendar, Clock, Sparkles } from 'lucide-react';
 import { NewTaskInput } from '../types/task';
 import { getTodayString, getTomorrowString } from '../lib/dateUtils';
 
@@ -28,44 +28,45 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-paper-darkCard rounded-xl border border-neutral-200 dark:border-neutral-800 p-3 shadow-sm transition-all focus-within:ring-2 focus-within:ring-notion-blue/30 focus-within:border-notion-blue">
-      <div className="flex items-center gap-2">
+    <form onSubmit={handleSubmit} className="bg-comic-card dark:bg-comic-cardDark rounded-2xl border-2 border-comic-ink dark:border-neutral-200 p-3.5 shadow-comic transition-all focus-within:shadow-comic-lg">
+      <div className="flex items-center gap-2.5">
         <button
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
-          className="text-ink-secondary dark:text-ink-darkSecondary hover:text-notion-blue p-1 rounded transition-colors"
-          title="Toggle extra options"
+          className="text-comic-ink dark:text-neutral-300 p-1 rounded-lg border-2 border-comic-ink dark:border-neutral-200 hover:bg-comic-bg dark:hover:bg-neutral-800 transition-colors"
+          title="Toggle options"
         >
-          <Plus size={20} className={isExpanded ? 'rotate-45 transition-transform' : 'transition-transform'} />
+          <Plus size={16} className={isExpanded ? 'rotate-45 transition-transform' : 'transition-transform'} />
         </button>
 
         <input
           type="text"
           value={title}
           onChange={e => setTitle(e.target.value)}
-          placeholder="Add a new task... (Press Enter to save)"
-          className="flex-1 bg-transparent text-sm md:text-base outline-none text-ink-primary dark:text-ink-darkPrimary placeholder:text-neutral-400"
+          placeholder="New quest or task... (Press Enter)"
+          className="flex-1 bg-transparent text-sm md:text-base font-medium outline-none text-comic-ink dark:text-neutral-100 placeholder:text-comic-inkMuted/60"
         />
 
         <button
           type="submit"
           disabled={!title.trim()}
-          className="px-3 py-1.5 bg-notion-blue text-white rounded-lg text-xs md:text-sm font-medium hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+          className="px-3.5 py-1.5 bg-comic-ink text-white dark:bg-neutral-100 dark:text-comic-ink rounded-full text-xs font-black tracking-wide border-2 border-comic-ink dark:border-neutral-200 flex items-center gap-1 shadow-comic-sm hover:translate-x-0.5 hover:translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
         >
-          Add
+          <Sparkles size={11} className="text-amber-400 dark:text-amber-600" />
+          <span>ADD</span>
+          <Sparkles size={11} className="text-amber-400 dark:text-amber-600" />
         </button>
       </div>
 
       {isExpanded && (
-        <div className="mt-3 pt-3 border-t border-neutral-100 dark:border-neutral-800/80 flex flex-wrap items-center gap-2 text-xs">
-          {/* Quick date chips */}
+        <div className="mt-3 pt-3 border-t-2 border-comic-ink/10 dark:border-neutral-800 flex flex-wrap items-center gap-2 text-xs font-mono">
           <button
             type="button"
             onClick={() => setDueDate(getTodayString())}
-            className={`px-2.5 py-1 rounded-md border transition-colors ${
+            className={`px-2.5 py-1 rounded-lg border-2 transition-all ${
               dueDate === getTodayString()
-                ? 'bg-blue-50 border-notion-blue text-notion-blue dark:bg-blue-950/40'
-                : 'border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300'
+                ? 'bg-comic-green text-white border-comic-green shadow-comic-sm'
+                : 'border-comic-ink dark:border-neutral-700 text-comic-ink dark:text-neutral-300 bg-comic-bg dark:bg-neutral-800'
             }`}
           >
             Today
@@ -74,17 +75,16 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
           <button
             type="button"
             onClick={() => setDueDate(getTomorrowString())}
-            className={`px-2.5 py-1 rounded-md border transition-colors ${
+            className={`px-2.5 py-1 rounded-lg border-2 transition-all ${
               dueDate === getTomorrowString()
-                ? 'bg-blue-50 border-notion-blue text-notion-blue dark:bg-blue-950/40'
-                : 'border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300'
+                ? 'bg-comic-green text-white border-comic-green shadow-comic-sm'
+                : 'border-comic-ink dark:border-neutral-700 text-comic-ink dark:text-neutral-300 bg-comic-bg dark:bg-neutral-800'
             }`}
           >
             Tomorrow
           </button>
 
-          {/* Date Picker */}
-          <label className="flex items-center gap-1 px-2.5 py-1 rounded-md border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300 cursor-pointer">
+          <label className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border-2 border-comic-ink dark:border-neutral-700 text-comic-ink dark:text-neutral-300 bg-comic-bg dark:bg-neutral-800 cursor-pointer">
             <Calendar size={13} />
             <input
               type="date"
@@ -94,8 +94,7 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
             />
           </label>
 
-          {/* Time Picker */}
-          <label className="flex items-center gap-1 px-2.5 py-1 rounded-md border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300 cursor-pointer">
+          <label className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border-2 border-comic-ink dark:border-neutral-700 text-comic-ink dark:text-neutral-300 bg-comic-bg dark:bg-neutral-800 cursor-pointer">
             <Clock size={13} />
             <input
               type="time"

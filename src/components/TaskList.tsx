@@ -53,13 +53,13 @@ export const TaskList: React.FC<TaskListProps> = ({
 
   if (tasks.length === 0) {
     return (
-      <div className="text-center py-12 px-4 rounded-xl border border-dashed border-neutral-200 dark:border-neutral-800">
-        <CheckCircle2 size={36} className="mx-auto text-neutral-300 dark:text-neutral-700 mb-2" />
-        <p className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
-          No tasks found
+      <div className="text-center py-12 px-4 rounded-2xl border-2 border-dashed border-comic-ink/30 dark:border-neutral-700 bg-comic-card dark:bg-comic-cardDark shadow-comic">
+        <CheckCircle2 size={36} className="mx-auto text-comic-inkMuted dark:text-neutral-500 mb-2" />
+        <p className="text-sm font-bold text-comic-ink dark:text-neutral-200">
+          No quests active
         </p>
-        <p className="text-xs text-neutral-400 dark:text-neutral-500 mt-0.5">
-          Enjoy your clear focus or add a new task above
+        <p className="text-xs font-mono text-comic-inkMuted dark:text-neutral-400 mt-0.5">
+          Rest at the campfire or add a new quest above ✦
         </p>
       </div>
     );

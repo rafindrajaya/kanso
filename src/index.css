@@ -9,12 +9,42 @@
 body {
   margin: 0;
   min-height: 100vh;
-  min-height: 100dvh; /* Dynamic viewport height for iOS Safari */
+  min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hide scrollbar for tabs on mobile */
+/* Comic Speech Bubble Tail */
+.comic-bubble-tail {
+  position: absolute;
+  bottom: -9px;
+  left: 28px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 9px solid #0F0F0F;
+}
+.comic-bubble-tail::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: -6px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid #FDFCF9;
+}
+
+.dark .comic-bubble-tail {
+  border-top-color: #EDEDEB;
+}
+.dark .comic-bubble-tail::after {
+  border-top-color: #171717;
+}
+
+/* Hide scrollbar for mobile tabs */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
