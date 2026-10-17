@@ -12,7 +12,7 @@ export function useTasks() {
     saveTasksToStorage(tasks);
   }, [tasks]);
 
-  const addTask = useCallback((input: NewTaskInput) => {
+  const addTask = useCallback((input: NewTaskInput): Task => {
     const newTask: Task = {
       id: `task-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       title: input.title.trim(),
@@ -29,6 +29,8 @@ export function useTasks() {
       const shifted = prev.map(t => ({ ...t, order: t.order + 1 }));
       return [newTask, ...shifted];
     });
+
+    return newTask;
   }, []);
 
   const toggleTask = useCallback((id: string) => {

@@ -22,3 +22,9 @@ export interface NewTaskInput {
   dueTime?: string;
   notes?: string;
 }
+
+export interface CalendarSyncSettings {
+  autoSync: boolean;
+  syncMode: 'intent' | 'api';
+  googleClientId?: string;
+}

@@ -24,6 +24,7 @@ interface TaskListProps {
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
   onReorder: (activeId: string, overId: string) => void;
+  onUpdate?: (id: string, updates: Partial<Task>) => void;
 }
 
 export const TaskList: React.FC<TaskListProps> = ({
@@ -31,7 +32,8 @@ export const TaskList: React.FC<TaskListProps> = ({
   onToggle,
   onDelete,
   onReorder,
-}) => {
+  onUpdate,
+}): React.JSX.Element => {
   // Mobile touch sensor with 150ms delay to allow natural scrolling on iPhone 12 mini
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -45,7 +47,7 @@ export const TaskList: React.FC<TaskListProps> = ({
     })
   );
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = (event: DragEndEvent): void => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       triggerHaptic('medium');
@@ -77,6 +79,7 @@ export const TaskList: React.FC<TaskListProps> = ({
               task={task}
               onToggle={onToggle}
               onDelete={onDelete}
+              onUpdate={onUpdate}
             />
           ))}
         </div>
