@@ -1,10 +1,21 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Task, FilterView, NewTaskInput } from '../types/task';
-import { loadTasksFromStorage, saveTasksToStorage } from '../lib/storage';
+import {
+  loadTasksFromStorage,
+  saveTasksToStorage,
+  loadLifetimeCompletedCount,
+  archiveExpiredCompletedTasks,
+  archiveAllCompletedTasks,
+} from '../lib/storage';
 import { getTodayString, isToday } from '../lib/dateUtils';
 
 export function useTasks() {
-  const [tasks, setTasks] = useState<Task[]>(() => loadTasksFromStorage());
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const loaded = loadTasksFromStorage();
+    const result = archiveExpiredCompletedTasks(loaded);
+    return result.updatedTasks;
+  });
+  const [lifetimeCompleted, setLifetimeCompleted] = useState<number>(() => loadLifetimeCompletedCount());
   const [filter, setFilter] = useState<FilterView>('active');
 
   // Sync to local storage whenever tasks state changes
@@ -57,6 +68,14 @@ export function useTasks() {
     setTasks(prev => prev.filter(task => task.id !== id));
   }, []);
 
+  const archiveCompleted = useCallback(() => {
+    setTasks(prev => {
+      const result = archiveAllCompletedTasks(prev);
+      setLifetimeCompleted(loadLifetimeCompletedCount());
+      return result.updatedTasks;
+    });
+  }, []);
+
   const reorderTasks = useCallback((activeId: string, overId: string) => {
     setTasks(prev => {
       const oldIndex = prev.findIndex(t => t.id === activeId);
@@ -94,10 +113,12 @@ export function useTasks() {
     filter,
     setFilter,
     filteredTasks,
+    lifetimeCompleted,
     addTask,
     toggleTask,
     updateTask,
     deleteTask,
     reorderTasks,
+    archiveCompleted,
   };
 }

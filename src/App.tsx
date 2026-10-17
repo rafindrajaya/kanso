@@ -11,6 +11,7 @@ import {
   getCalendarSyncSettings,
   isGoogleCalendarConnected,
   autoSyncNewTask,
+  refreshGoogleAccessTokenSilently,
 } from './lib/googleCalendar';
 import { CalendarSyncSettings, NewTaskInput } from './types/task';
 import { Check, CalendarSync } from 'lucide-react';
@@ -33,11 +34,13 @@ export function App(): React.JSX.Element {
     filter,
     setFilter,
     filteredTasks,
+    lifetimeCompleted,
     addTask,
     toggleTask,
     updateTask,
     deleteTask,
     reorderTasks,
+    archiveCompleted,
   } = useTasks();
 
   useEffect(() => {
@@ -48,6 +51,13 @@ export function App(): React.JSX.Element {
       document.documentElement.classList.remove('dark');
     }
   }, [isDarkMode]);
+
+  // On mount or settings change: silently verify/renew Google OAuth token if auto-sync is active
+  useEffect(() => {
+    if (calendarSettings.autoSync && calendarSettings.googleClientId) {
+      void refreshGoogleAccessTokenSilently();
+    }
+  }, [calendarSettings.autoSync, calendarSettings.googleClientId]);
 
   const handleAddTask = (input: NewTaskInput): void => {
     const created = addTask(input);
@@ -83,9 +93,9 @@ export function App(): React.JSX.Element {
     return {
       completedToday,
       totalToday: todayTasks.length,
-      completedTotal: tasks.filter((t) => t.completed).length,
+      completedTotal: lifetimeCompleted + tasks.filter((t) => t.completed).length,
     };
-  }, [tasks]);
+  }, [tasks, lifetimeCompleted]);
 
   return (
     <div className="min-h-screen bg-comic-bg dark:bg-[#121212] transition-colors pt-safe pb-safe px-4 md:px-0">
@@ -154,6 +164,9 @@ export function App(): React.JSX.Element {
             onDelete={deleteTask}
             onReorder={reorderTasks}
             onUpdate={updateTask}
+            isCompletedView={filter === 'completed'}
+            onArchiveAll={archiveCompleted}
+            archivedLifetimeCount={lifetimeCompleted}
           />
         </main>
 

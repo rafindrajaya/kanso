@@ -34,6 +34,7 @@ declare global {
 
 const CALENDAR_SYNC_STORAGE_KEY = 'kanso_calendar_sync_settings';
 const GCAL_TOKEN_STORAGE_KEY = 'kanso_gcal_token';
+const GCAL_EXPIRY_STORAGE_KEY = 'kanso_gcal_token_expires_at';
 
 export const DEFAULT_CALENDAR_SYNC_SETTINGS: CalendarSyncSettings = {
   autoSync: false,
@@ -45,43 +46,63 @@ let activeTokenClient: TokenClient | null = null;
 let cachedAccessToken: string | null = null;
 
 /**
- * Retrieves cached Google access token from memory or sessionStorage
+ * Checks if the stored Google access token has expired or is nearing expiration
+ */
+export function isGoogleTokenExpired(): boolean {
+  try {
+    const expiryRaw = localStorage.getItem(GCAL_EXPIRY_STORAGE_KEY);
+    if (!expiryRaw) return true;
+    const expiry = parseInt(expiryRaw, 10);
+    // Buffer by 60 seconds before expiration
+    return Date.now() >= expiry - 60 * 1000;
+  } catch {
+    return true;
+  }
+}
+
+/**
+ * Retrieves cached Google access token from memory or localStorage
  */
 export function getCachedGoogleAccessToken(): string | null {
-  if (cachedAccessToken) return cachedAccessToken;
+  if (cachedAccessToken && !isGoogleTokenExpired()) return cachedAccessToken;
   try {
-    const saved = sessionStorage.getItem(GCAL_TOKEN_STORAGE_KEY);
-    if (saved) {
+    const saved = localStorage.getItem(GCAL_TOKEN_STORAGE_KEY);
+    if (saved && !isGoogleTokenExpired()) {
       cachedAccessToken = saved;
       return saved;
     }
   } catch {
-    // Session storage not accessible
+    // Storage not accessible
   }
   return null;
 }
 
 /**
- * Updates or clears the cached Google access token
+ * Updates or clears the cached Google access token with expiration timestamp in localStorage
  */
-export function setCachedGoogleAccessToken(token: string | null): void {
+export function setCachedGoogleAccessToken(token: string | null, expiresInSeconds = 3599): void {
   cachedAccessToken = token;
   try {
     if (token) {
-      sessionStorage.setItem(GCAL_TOKEN_STORAGE_KEY, token);
+      localStorage.setItem(GCAL_TOKEN_STORAGE_KEY, token);
+      const expiry = Date.now() + expiresInSeconds * 1000;
+      localStorage.setItem(GCAL_EXPIRY_STORAGE_KEY, expiry.toString());
     } else {
-      sessionStorage.removeItem(GCAL_TOKEN_STORAGE_KEY);
+      localStorage.removeItem(GCAL_TOKEN_STORAGE_KEY);
+      localStorage.removeItem(GCAL_EXPIRY_STORAGE_KEY);
     }
   } catch {
-    // Session storage write error ignored
+    // Storage write error ignored
   }
 }
 
 /**
- * Checks if active Google Calendar connection exists
+ * Checks if active Google Calendar connection exists or is configured for silent sync
  */
 export function isGoogleCalendarConnected(): boolean {
-  return !!getCachedGoogleAccessToken();
+  if (getCachedGoogleAccessToken()) return true;
+  const settings = getCalendarSyncSettings();
+  return !!(settings.autoSync && settings.googleClientId);
 }
 
 /**
@@ -234,6 +255,52 @@ export async function createGoogleCalendarEventViaApi(
 }
 
 /**
+ * Silently refreshes Google OAuth access token using Google Identity Services
+ * without showing user prompts if previous authorization exists
+ */
+export function refreshGoogleAccessTokenSilently(): Promise<string | null> {
+  return new Promise((resolve) => {
+    const settings = getCalendarSyncSettings();
+    if (!settings.googleClientId || !settings.autoSync) {
+      resolve(null);
+      return;
+    }
+    if (typeof window === 'undefined' || !window.google?.accounts?.oauth2) {
+      resolve(null);
+      return;
+    }
+
+    const timer = setTimeout(() => resolve(null), 10000);
+
+    try {
+      activeTokenClient = window.google.accounts.oauth2.initTokenClient({
+        client_id: settings.googleClientId.trim(),
+        scope: 'https://www.googleapis.com/auth/calendar.events',
+        callback: (response: TokenResponse) => {
+          clearTimeout(timer);
+          if (response.access_token) {
+            const expiresIn = response.expires_in ?? 3599;
+            setCachedGoogleAccessToken(response.access_token, expiresIn);
+            resolve(response.access_token);
+          } else {
+            resolve(null);
+          }
+        },
+        error_callback: () => {
+          clearTimeout(timer);
+          resolve(null);
+        },
+      });
+
+      activeTokenClient.requestAccessToken({ prompt: '' });
+    } catch {
+      clearTimeout(timer);
+      resolve(null);
+    }
+  });
+}
+
+/**
  * Requests OAuth access token using Google Identity Services token client
  */
 export function requestGoogleAccessToken(
@@ -251,7 +318,8 @@ export function requestGoogleAccessToken(
     scope: 'https://www.googleapis.com/auth/calendar.events',
     callback: (response: TokenResponse) => {
       if (response.access_token) {
-        setCachedGoogleAccessToken(response.access_token);
+        const expiresIn = response.expires_in ?? 3599;
+        setCachedGoogleAccessToken(response.access_token, expiresIn);
         onToken(response.access_token);
       } else if (response.error) {
         onError?.(response.error);
@@ -280,7 +348,11 @@ export async function autoSyncNewTask(task: Task): Promise<AutoSyncResult> {
     return { synced: false, status: 'disabled' };
   }
 
-  const token = getCachedGoogleAccessToken();
+  let token = getCachedGoogleAccessToken();
+  if (!token) {
+    token = await refreshGoogleAccessTokenSilently();
+  }
+
   if (!token) {
     return { synced: false, status: 'not_authenticated' };
   }

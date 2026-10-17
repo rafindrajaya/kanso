@@ -28,3 +28,8 @@ export interface CalendarSyncSettings {
   syncMode: 'intent' | 'api';
   googleClientId?: string;
 }
+
+export interface ArchiveResult {
+  updatedTasks: Task[];
+  archivedCount: number;
+}
